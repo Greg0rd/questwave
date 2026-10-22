@@ -55,6 +55,7 @@ static jmethodID g_mDeleteMenu;
 static jmethodID g_mWait;
 static jmethodID g_mShowWindow;
 static jmethodID g_mGetFileContents;
+static jmethodID g_mChangeQuestPath;
 
 static jclass g_actionClass;
 static jfieldID g_actionName;
@@ -480,6 +481,24 @@ static void adapterCallSaveGameStatus(QSPString file)
     adapterClearException(env);
 }
 
+/* 5.7 notified Java about the directory of the loaded quest; that is how
+ * Questopia updated asset resolution after OPENQST. 5.9.5 has no such
+ * callback, so the adapter issues the same Java call itself. */
+static void adapterCallChangeQuestPath(const QSP_CHAR *path)
+{
+    JNIEnv *env = adapterEnv();
+    jstring value;
+    size_t length = 0;
+
+    if (!env || !g_callbacks || !path || !path[0] || !g_mChangeQuestPath) return;
+    while (path[length]) ++length;
+    value = (*env)->NewString(env, (const jchar *)path, (jsize)length);
+    if (!value) return;
+    (*env)->CallVoidMethod(env, g_callbacks, g_mChangeQuestPath, value);
+    (*env)->DeleteLocalRef(env, value);
+    adapterClearException(env);
+}
+
 static void adapterCallInputBox(QSPString text, QSP_CHAR *buffer, int maxLen)
 {
     JNIEnv *env = adapterEnv();
@@ -577,15 +596,28 @@ static int adapterMapWindowType(int type)
     return -1;
 }
 
-static void adapterCallShowWindow(int type, QSP_BOOL toShow)
+static void adapterShowOneWindow(JNIEnv *env, int type, QSP_BOOL toShow)
 {
-    JNIEnv *env = adapterEnv();
     int mapped = adapterMapWindowType(type);
 
-    if (!env || !g_callbacks || mapped < 0) return;
+    if (mapped < 0) return;
     (*env)->CallVoidMethod(env, g_callbacks, g_mShowWindow,
                            (jint)mapped, toShow ? JNI_TRUE : JNI_FALSE);
     adapterClearException(env);
+}
+
+static void adapterCallShowWindow(int type, QSP_BOOL toShow)
+{
+    JNIEnv *env = adapterEnv();
+
+    if (!env || !g_callbacks) return;
+
+    /* 5.9.5 sends a bit set (for example all disabled windows at once).
+     * Questopia's Java side expects one window per call. */
+    if (type & QSP_WIN_ACTS) adapterShowOneWindow(env, QSP_WIN_ACTS, toShow);
+    if (type & QSP_WIN_OBJS) adapterShowOneWindow(env, QSP_WIN_OBJS, toShow);
+    if (type & QSP_WIN_VARS) adapterShowOneWindow(env, QSP_WIN_VARS, toShow);
+    if (type & QSP_WIN_INPUT) adapterShowOneWindow(env, QSP_WIN_INPUT, toShow);
 }
 
 /* Reads a game file through Java (the engine has no file system access in
@@ -594,6 +626,8 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
 {
     JNIEnv *env = adapterEnv();
     QSP_CHAR *resolved;
+    QSP_CHAR *newGamePath = NULL;
+    QSP_CHAR *newBaseDir = NULL;
     QSPString resolvedQsp;
     jstring javaPath;
     jbyteArray data;
@@ -610,6 +644,13 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
     }
 
     resolvedQsp = QSPStringFromC(resolved);
+    if (isNewGame)
+    {
+        /* OPENQST switches the game. Later relative requests must be resolved
+         * against the newly opened file, not against the original one. */
+        newGamePath = adapterCopyQspString(resolvedQsp);
+        newBaseDir = adapterDirName(resolved);
+    }
     javaPath = adapterNewString(env, resolvedQsp);
     data = (jbyteArray)(*env)->CallObjectMethod(env, g_callbacks, g_mGetFileContents, javaPath);
     (*env)->DeleteLocalRef(env, javaPath);
@@ -625,6 +666,8 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
     if (!data)
     {
         ADAPTER_LOGE("Game file not found");
+        free(newGamePath);
+        free(newBaseDir);
         qspSetError(QSP_ERR_CANTLOADFILE);
         return;
     }
@@ -633,6 +676,8 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
     if (length <= 0)
     {
         (*env)->DeleteLocalRef(env, data);
+        free(newGamePath);
+        free(newBaseDir);
         qspSetError(QSP_ERR_CANTLOADFILE);
         return;
     }
@@ -641,6 +686,8 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
     if (!buffer)
     {
         (*env)->DeleteLocalRef(env, data);
+        free(newGamePath);
+        free(newBaseDir);
         qspSetError(QSP_ERR_CANTLOADFILE);
         return;
     }
@@ -653,16 +700,34 @@ static void adapterLoadGameFile(QSPString file, QSP_BOOL isNewGame)
         (*env)->ExceptionDescribe(env);
         (*env)->ExceptionClear(env);
         free(buffer);
+        free(newGamePath);
+        free(newBaseDir);
         qspSetError(QSP_ERR_CANTLOADFILE);
         return;
     }
 
     if (!QSPLoadGameWorldFromData(buffer, (int)length, isNewGame))
+    {
         ADAPTER_LOGE("QSPLoadGameWorldFromData failed for an engine file request");
+    }
     else
+    {
+        if (isNewGame && newGamePath && newBaseDir)
+        {
+            adapterCallChangeQuestPath(newBaseDir);
+            free(g_gamePath);
+            free(g_baseDir);
+            g_gamePath = newGamePath;
+            g_baseDir = newBaseDir;
+            newGamePath = NULL;
+            newBaseDir = NULL;
+        }
         adapterResetChangedState();
+    }
 
     free(buffer);
+    free(newGamePath);
+    free(newBaseDir);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -739,12 +804,13 @@ static int adapterCacheCallbacks(JNIEnv *env)
     g_mWait = (*env)->GetMethodID(env, g_callbacksClass, "Wait", "(I)V");
     g_mShowWindow = (*env)->GetMethodID(env, g_callbacksClass, "ShowWindow", "(IZ)V");
     g_mGetFileContents = (*env)->GetMethodID(env, g_callbacksClass, "GetFileContents", "(Ljava/lang/String;)[B");
+    g_mChangeQuestPath = (*env)->GetMethodID(env, g_callbacksClass, "ChangeQuestPath", "(Ljava/lang/String;)V");
 
     return g_mRefreshInt && g_mShowPicture && g_mSetTimer && g_mShowMessage &&
            g_mPlayFile && g_mIsPlayingFile && g_mCloseFile && g_mOpenGame &&
            g_mSaveGame && g_mInputBox && g_mGetMSCount && g_mAddMenuItem &&
            g_mShowMenu && g_mDeleteMenu && g_mWait && g_mShowWindow &&
-           g_mGetFileContents;
+           g_mGetFileContents && g_mChangeQuestPath;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1269,6 +1335,11 @@ Java_com_questwave_player_model_libQP_NativeMethods_QSPLoadGameWorldFromData(JNI
      * (this is the equivalent of the old path-aware load). */
     result = QSPLoadGameWorldFromData(buffer, (int)dataSize, QSP_TRUE) ? JNI_TRUE : JNI_FALSE;
 
+    /* Match 5.7: tell Java which directory the quest was loaded from. This
+     * also keeps image/audio lookup inside the actual game folder. */
+    if (result && g_baseDir && g_baseDir[0])
+        adapterCallChangeQuestPath(g_baseDir);
+
     free(buffer);
     adapterResetChangedState();
     return result;
@@ -1278,18 +1349,16 @@ JNIEXPORT jbyteArray JNICALL
 Java_com_questwave_player_model_libQP_NativeMethods_QSPSaveGameAsData(JNIEnv *env, jobject thiz,
                                                                       jboolean isRefresh)
 {
-    int size = 0;
+    /* ONGSAVE runs inside every QSPSaveGameAsData() call, so a no-buffer
+     * "measure" pass would execute game code twice and could duplicate
+     * messages/sounds/counters. Start with a generous caller-owned buffer and
+     * only retry for truly huge saves. */
+    int size = 8 * 1024 * 1024;
     int attempt;
-    void *buffer = NULL;
-    jbyteArray result = NULL;
+    void *buffer;
+    jbyteArray result;
 
     (void)thiz;
-
-    /* 5.9.5 requires the caller to own the buffer: first ask for the size,
-     * then write. The engine reserves spare space for growth. */
-    (void)QSPSaveGameAsData(NULL, &size, isRefresh == JNI_TRUE ? QSP_TRUE : QSP_FALSE);
-    if (size <= 0)
-        return NULL;
 
     for (attempt = 0; attempt < 4; ++attempt)
     {
@@ -1297,19 +1366,18 @@ Java_com_questwave_player_model_libQP_NativeMethods_QSPSaveGameAsData(JNIEnv *en
         buffer = malloc((size_t)size);
         if (!buffer) return NULL;
 
-        if (QSPSaveGameAsData(buffer, &written, QSP_FALSE))
+        if (QSPSaveGameAsData(buffer, &written, isRefresh == JNI_TRUE ? QSP_TRUE : QSP_FALSE))
         {
-            result = (*env)->NewByteArray(env, written);
+            result = (*env)->NewByteArray(env, (jsize)written);
             if (result)
-                (*env)->SetByteArrayRegion(env, result, 0, written, (jbyte *)buffer);
+                (*env)->SetByteArrayRegion(env, result, 0, (jsize)written, (jbyte *)buffer);
             free(buffer);
             return result;
         }
 
         free(buffer);
-        buffer = NULL;
         if (written <= size)
-            return NULL; /* no progress: not a buffer-size problem */
+            return NULL; /* not a buffer-size problem */
         size = written;
     }
 
@@ -1338,7 +1406,6 @@ Java_com_questwave_player_model_libQP_NativeMethods_QSPOpenSavedGameFromData(JNI
                                       isRefresh == JNI_TRUE ? QSP_TRUE : QSP_FALSE) ? JNI_TRUE : JNI_FALSE;
 
     free(buffer);
-    adapterResetChangedState();
     return result;
 }
 
@@ -1350,7 +1417,6 @@ Java_com_questwave_player_model_libQP_NativeMethods_QSPRestartGame(JNIEnv *env, 
     (void)env; (void)thiz;
     adapterResetChangedState();
     result = QSPRestartGame(isRefresh == JNI_TRUE ? QSP_TRUE : QSP_FALSE);
-    adapterResetChangedState();
     return result ? JNI_TRUE : JNI_FALSE;
 }
 
