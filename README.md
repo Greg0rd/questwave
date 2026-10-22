@@ -68,10 +68,3 @@ Questwave would not exist without the work of others:
 * **QSP 5.9.5** — QSP Foundation / Val Argunov, licensed under MPL-2.0.
 * **Oniguruma** — K. Kosako and contributors, BSD-2-Clause.
 * **Quest Soft Player** — the original QSP player.
-
-QSP is MPL-2.0, Oniguruma is BSD-2-Clause; their license texts are preserved in
-the vendored sources and in [`licenses/`](licenses/). Questopia 3.19.4 does not
-ship a license file, so **no license is granted for the Questopia/QuestPlayer
-code** in this local build; all rights remain with its authors. Questwave is not
-affiliated with or endorsed by any of the projects above. Game files and their
-content belong to their authors.
