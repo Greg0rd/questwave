@@ -1,28 +1,77 @@
-# Questopia
+# Questwave
 
-![android-test](https://github.com/l3ger0j/QuestPlayerAndroid/actions/workflows/android-test.yml/badge.svg) ![android-build](https://github.com/l3ger0j/QuestPlayerAndroid/actions/workflows/android-build.yml/badge.svg)
+Questwave is a **private, local-only** Android client for interactive text
+games in the QSP format. It is a rebranded build of
+[Questopia 3.19.4](https://github.com/Pixel-Narrative-Punks/Questopia) with the
+native QSP engine replaced by **QSP 5.9.5**.
 
-Android application for launching text format games [QSP](https://github.com/seedhartha/qsp).
+* Package / application ID: `com.questwave.player`
+* App name: Questwave
+* Engine: QSP 5.9.5 (vendored, pinned) + Oniguruma
+* Base: Questopia 3.19.4, engine integration based on the Questopia JNI bridge
+* ABIs: armeabi-v7a, arm64-v8a, x86, x86_64
 
-## Thanks
+Questwave is not published anywhere and is not a Questopia/QuestPlayer/
+Quest Soft Player release. It installs next to those apps and has its own
+preferences, save pickers and FileProvider authority.
 
-* **[Nikolai Reznik](https://github.com/shirrumon)** for creating a PrettyFilePicker.
+## Documentation
 
-## How to use the Plugin API
+| Document | Content |
+| --- | --- |
+| [`docs/build.md`](docs/build.md) | requirements, Gradle, Android Studio, GitHub Actions, verification |
+| [`docs/qsp-5.9.5-api-mapping.md`](docs/qsp-5.9.5-api-mapping.md) | old JNI surface → QSP 5.9.5 API/callbacks mapping |
+| [`docs/renamed-places.md`](docs/renamed-places.md) | every package ID/action/authority rename |
+| [`docs/game-compatibility.md`](docs/game-compatibility.md) | expected behavior, known incompatible saves/plugins, manual checklist |
+| [`app/src/main/jni/qsp-5.9.5/README.md`](app/src/main/jni/qsp-5.9.5/README.md) | pinned engine/Oniguruma revisions and licenses |
 
-**At the moment, the Plugin API is still in development! Therefore, in order for your plugin to work successfully with my application, you will need to contact me.**
+## What changed
 
-To get started, you will need to create an [AIDL](https://developer.android.com/guide/components/aidl) interface, be sure to place it on the path "org.qp.android.plugin". Next, you need to fill in this file with the following information:
+* Full package/application ID rename to `com.questwave.player`, including JNI
+  symbol names and `System.loadLibrary("ndkqsp")` (library name kept).
+* New launcher icon and splash; Questopia news/banners, external chats,
+  donations, update checks and JitPack dependencies removed.
+* Own FileProvider authority and preferences; coexists with Questopia.
+* QSP 5.7.0 sources deleted; QSP 5.9.5 and Oniguruma vendored at pinned
+  revisions and built with CMake for all four ABIs, with 16 KB ELF page
+  alignment (`-Wl,-z,max-page-size=16384`).
+* Thin C adapter keeps `NativeMethods` and `LibQpCallbacks` unchanged where
+  possible, so the rendering/media/file-picking architecture stayed intact.
+* Friendly, localized error for incompatible/corrupted saves instead of a
+  technical QSP dialog or a crash.
 
+Plugins built for Questopia are **not** compatible: the AIDL package and the
+plugin discovery action were renamed. See
+[`docs/game-compatibility.md`](docs/game-compatibility.md).
+
+## Build
+
+```powershell
+$env:JAVA_HOME = 'C:\path\to\jdk-17'
+$env:ANDROID_HOME = 'C:\Users\<you>\AppData\Local\Android\Sdk'
+.\gradlew.bat :app:assembleDebug --no-daemon --console=plain
 ```
-interface yourInterfaceName {
-    String versionPlugin();
-    String titlePlugin();
-    String authorPlugin();
-}
-```
-Don't forget to return your AIDL interface with the Stub() parameter in the service class, in the onBind method, and initialize the values, and the framework of your plugin for the application is ready!
 
-## Disclaimer
+Output: `app/build/outputs/apk/debug/app-debug.apk`.
 
-**This fork was made WhoYouAndM3. The original project (hereinafter **[QuestPlayer](https://github.com/seedhartha/QuestPlayer)**) with an no license does not bear any responsibility for this fork **[QuestPlayAndroid](https://github.com/l3ger0j/QuestPlayer.git)**.**
+CI: `.github/workflows/questwave-debug.yml` (manual dispatch or push to
+`feature/questwave-qsp-5.9.5`) uploads the debug APK. No secrets are required.
+
+## Credits and licensing
+
+Questwave would not exist without the work of others:
+
+* **QuestPlayer / QuestPlayer Android** — seedhartha and contributors
+  (original Android port).
+* **Questopia 3.19.4** — Pixel Narrative Punks and contributors (the base of
+  this build).
+* **QSP 5.9.5** — QSP Foundation / Val Argunov, licensed under MPL-2.0.
+* **Oniguruma** — K. Kosako and contributors, BSD-2-Clause.
+* **Quest Soft Player** — the original QSP player.
+
+QSP is MPL-2.0, Oniguruma is BSD-2-Clause; their license texts are preserved in
+the vendored sources and in [`licenses/`](licenses/). Questopia 3.19.4 does not
+ship a license file, so **no license is granted for the Questopia/QuestPlayer
+code** in this local build; all rights remain with its authors. Questwave is not
+affiliated with or endorsed by any of the projects above. Game files and their
+content belong to their authors.
