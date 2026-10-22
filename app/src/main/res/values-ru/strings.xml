@@ -56,41 +56,38 @@
     <!-- Dialog Credits -->
     <string name="appDescription">
 <![CDATA[
-<h2><center>О Questopia<img src=\"file:///android_res/drawable/landscape.jpg\" width=\"100%\"></center></h2>
-<h4 style="margin-left:5px;">Quest Player Android это Android-порт с открытым исходным кодом оригинальной <b>Quest Soft Player</b> (<a href=\"http://qsp.su/?option=com_content&view=article&id=64\">русскоязычный сайт</a>), основанный на форке от <a href=\"https://github.com/seedhartha/QuestPlayer\">seedharta</a>. Вы можете скачать актуальную версию приложения на <a href=\"https://github.com/l3ger0j/Questopia\">GitHub</a> или в <a href=\"https://t.me/QuestPlayer\">Телеграм канале</a>.</h4>
+<h2><center>О Questwave</center></h2>
+<h4 style="margin-left:5px;">Questwave — Android-клиент для интерактивных текстовых игр в формате <b>QSP</b>. Он основан на открытом проекте <b>Questopia</b>, который продолжает Android-порт <b>QuestPlayer</b> от seedhartha. Используется движок <b>QSP 5.9.5</b> от QSP Foundation.</h4>
+<h4 style="margin-left:5px;">Это приватная сборка для локального использования. Приложение не связано с Questopia, QuestPlayer, QSP Foundation или Quest Soft Player и не одобрено ими. Файлы игр и их содержимое принадлежат их авторам.</h4>
 ]]>
     </string>
     <string name="appCredits">
 <![CDATA[
-<center><h3>В ролях</h3></center>
+<center><h3>Авторы и благодарности</h3></center>
 <ul>
-    <li><b>Разработка:</b></li>
-    <ul style="list-style-type:none">
-        <li><a href=\"https://github.com/l3ger0j/\">l3ger0j</a></li>
-        <li><a href=\"https://github.com/shirrumon/\">shirrumon</a></li>
-    </ul>
+<li><b>QuestPlayer Android</b> — seedhartha и участники (исходный Android-порт).</li>
+<li><b>Questopia</b> — l3ger0j, WhoYouAndM3 и участники (основа этого клиента).</li>
+<li><b>Движок QSP 5.9.5</b> — Валерий Аргунов (byte) и QSP Foundation.</li>
+<li><b>Quest Soft Player</b> — Валерий Аргунов, оригинальный QSP-плеер.</li>
+<li><b>Oniguruma</b> — K.Kosako и участники.</li>
 </ul>
-<center><h3>Люди, принимавшие участие в разработке оригинального форка от seedharta</h3></center>
+<center><h3>Сторонние библиотеки</h3></center>
 <ul>
-    <li><b>Разработка:</b></li>
-    <ul style="list-style-type:none">
-        <li>Nex (~v1.0.201)</li>
-        <li>BOOMik (v1.3)</li>
-        <li>MrBoboFace (v1.4+)</li>
-        <li>seedhartha (v2.1+)</li>
-    </ul>
-    <li><b>Перевод:</b></li>
-    <ul style="list-style-type:none">
-        <li>Illume (Китайский упрощенный / Китайский традиционный/Английский~v1.3)</li>
-        <li>Unregistred (Русский)</li>
-    <li><b>Особое спасибо:</b> Kevin Smarts и всему <a href=\"https://tfgamessite.com/\">TFGamesSite сообществу</a></li>
-    <li><i>Изображения Пятого Мира</i> созданы Noah Bradley (Творческие Сообщества; изображения уменьшены и обрезаны)</li>
+<li>AndroidX и Material Components — Apache License 2.0</li>
+<li>Jsoup — MIT License</li>
+<li>Picasso — Apache License 2.0</li>
+<li>ColorPicker — Apache License 2.0</li>
+<li>Simple XML — BSD License</li>
+<li>Anggrayudi Storage — Apache License 2.0</li>
 </ul>
+<center><h3>Лицензии</h3></center>
+<p>Движок QSP распространяется по Mozilla Public License 2.0. Oniguruma — по BSD 2-Clause License. Тексты лицензий включены в исходный код (папка licenses/).</p>
+<p>В Questopia 3.19.4 нет файла лицензии. Эта локальная сборка не публикуется; все права на исходный код Questopia и QuestPlayer принадлежат их авторам.</p>
 ]]>
     </string>
     <!-- Use in activity/fragment -->
     <!-- QTopia -->
-        <string name="appName">Questopia</string>
+        <string name="appName">Questwave</string>
     <!-- SettingsFragment -->
         <string name="closeToApply">Закройте настройки для применения изменений</string>
         <string name="settingsEffect">Настройки вступят в силу при следующей распаковке игры</string>
@@ -144,7 +141,7 @@
         <string name="useGameLinkColorSum">Использовать настройки цвета ссылки из игры</string>
         <string name="linkColorTitle">Свой Цвет Ссылок</string>
         <string name="textBackLinkColorSum">Значение по умолчанию -VALUE-</string>
-        <string name="extendedName">Questopia -VERSION-</string>
+        <string name="extendedName">Questwave -VERSION-</string>
         <!-- Image section -->
         <string name="imageCatTitle">Настройки отображения картинок</string>
         <string name="autoWidthTitle">Авто Ширина Изображения</string>
@@ -168,7 +165,7 @@
         <!-- Extra section -->
         <string name="extraCatTitle">Экстра</string>
         <string name="pluginTitle">Меню плагинов</string>
-        <string name="aboutTitle">О программе</string>
+        <string name="aboutTitle">Рћ Questwave</string>
     <!-- Menu save and load -->
         <string name="selectSlot">Выберите слот</string>
         <string name="slotPresent" formatted="false">Слот %d - %s</string>
@@ -177,8 +174,6 @@
         <string name="saveTo">В файл…</string>
     <!-- Menu plugins -->
         <string name="pluginMenuTitle">Плагины</string>
-    <!-- Menu news -->
-        <string name="newsMenuTitle">Новости Questopia</string>
 </resources>
 
 

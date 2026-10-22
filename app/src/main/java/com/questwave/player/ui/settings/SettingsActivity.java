@@ -56,10 +56,6 @@ public class SettingsActivity extends AppCompatActivity {
                     .getCurrentDestination()
                     .getLabel() , "PluginFragment")) {
                 onBackPressed();
-            } else if (Objects.equals(navController
-                    .getCurrentDestination()
-                    .getLabel() , "NewsFragment")) {
-                onBackPressed();
             } else {
                 finish();
             }

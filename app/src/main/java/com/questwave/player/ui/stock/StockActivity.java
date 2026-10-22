@@ -40,8 +40,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggrayudi.storage.SimpleStorageHelper;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.questwave.player.BuildConfig;
@@ -205,11 +203,6 @@ public class StockActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             navController.navigate(R.id.stockRecyclerFragment);
         }
-
-        new AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("l3ger0j", "Questopia")
-                .start();
     }
 
     @Override

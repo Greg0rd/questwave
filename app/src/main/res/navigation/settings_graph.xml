@@ -12,9 +12,5 @@
         android:id="@+id/pluginFragment"
         android:name="com.questwave.player.ui.plugin.PluginFragment"
         android:label="PluginFragment" />
-    <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.questwave.player.ui.news.NewsFragment"
-        android:label="NewsFragment" />
 
 </navigation>

@@ -153,9 +153,6 @@
             android:title="@string/pluginTitle"
             android:key="showExtensionMenu"/>
         <Preference
-            android:title="@string/newsMenuTitle"
-            android:key="newsApp" />
-        <Preference
             android:title="@string/aboutTitle"
             android:key="showAbout" />
         <Preference

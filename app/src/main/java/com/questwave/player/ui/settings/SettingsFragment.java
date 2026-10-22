@@ -79,10 +79,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
                     Navigation.findNavController(requireView()).navigate(R.id.pluginFragment);
                     return true;
                 }
-                case "newsApp" -> {
-                    Navigation.findNavController(requireView()).navigate(R.id.newsFragment);
-                    return true;
-                }
                 case "showAbout" -> {
                     var linearLayout = new LinearLayout(getContext());
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -114,10 +110,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
         var pluginPref = findPreference("showExtensionMenu");
         if (pluginPref != null)
             pluginPref.setOnPreferenceClickListener(listener);
-
-        var newsPref = findPreference("newsApp");
-        if (newsPref != null)
-            newsPref.setOnPreferenceClickListener(listener);
 
         var aboutPref = findPreference("showAbout");
         if (aboutPref != null)
