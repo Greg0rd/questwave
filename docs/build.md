@@ -86,7 +86,7 @@ Quick checks:
   app\build\outputs\apk\debug\app-debug.apk |
   Select-String 'package:|application-label:|native-code'
 
-# JNI symbols (41 NativeMethods + JNI_OnLoad)
+# JNI symbols (42 NativeMethods methods)
 & "$env:ANDROID_HOME\ndk\27.3.13750724\toolchains\llvm\prebuilt\windows-x86_64\bin\llvm-nm.exe" `
   -D --defined-only app\build\intermediates\stripped_native_libs\debug\out\lib\arm64-v8a\libndkqsp.so |
   Select-String 'Java_com_questwave_player_model_libQP_NativeMethods_'

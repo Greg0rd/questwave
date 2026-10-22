@@ -62,7 +62,7 @@ transcoding. The engine never calls `wcs*` functions, so a 2-byte `wchar_t` is s
 | `QSPGetLastErrorData` | `QSPGetLastErrorData` struct → `ErrorData` (`LocName`, `ErrorNum`, `ActIndex`, `IntLineNum`) |
 | `QSPGetErrorDesc` | `QSPGetErrorDesc` |
 | `QSPLoadGameWorldFromData` | remembers `fileName`'s directory for includes, then `QSPLoadGameWorldFromData(..., TRUE)` |
-| `QSPSaveGameAsData` | two-pass caller-owned buffer: `QSPSaveGameAsData(NULL, &size, ...)`, then write; up to 4 attempts |
+| `QSPSaveGameAsData` | single 8 MiB caller-owned attempt (ONGSAVE runs once); retries only for oversized saves |
 | `QSPOpenSavedGameFromData` | `QSPOpenSavedGameFromData`; hashes reset so the loaded UI is always re-read |
 | `QSPRestartGame` | `QSPRestartGame`; hashes reset |
 | `QSPSelectMenuItem` | stores the selected index consumed by the `QSP_CALL_SHOWMENU` callback |
@@ -87,8 +87,13 @@ transcoding. The engine never calls `wcs*` functions, so a 2-byte `wchar_t` is s
 | `QSP_CALL_SLEEP` | `Wait(msecs)` |
 | `QSP_CALL_OPENGAME` | adapter: path resolution + `GetFileContents` + `QSPLoadGameWorldFromData` |
 
-`QSP_CALL_CHANGEQUESTPATH` no longer exists in 5.9.5; `ChangeQuestPath` is kept in the
-Java interface for source compatibility but is not invoked.
+`QSP_CALL_CHANGEQUESTPATH` no longer exists in 5.9.5. The adapter calls Java
+`ChangeQuestPath` itself after loading a game world / opening another quest, so
+Questopia still updates the asset directory.
+
+`QSP_CALL_SHOWWINDOW` can carry several bits at once in 5.9.5 (for example all
+windows disabled by a game). The adapter issues one Java callback per requested
+window, matching the old single-window enum.
 
 `QSP_CALL_INPUTBOX` result is copied into the caller's buffer and always
 NUL-terminated. Menu item images and names are passed as Java strings.
