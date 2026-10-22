@@ -24,6 +24,7 @@
         <string name="downloadButton">Скачать игру</string>
     <!-- Dialog Error -->
         <string name="error">Ошибка</string>
+        <string name="incompatibleSave">Файл сохранения несовместим с движком QSP 5.9.5 или повреждён. Загрузка отменена.</string>
         <string name="interFolderError">Ошибка чтения внутренней папки приложения</string>
         <string name="gamesFolderError">Ошибка чтения и/или создания папки с играми</string>
         <string name="gameFolderEmpty">Я не нашла в папке с игрой файла в формате .qsp или .gam!</string>

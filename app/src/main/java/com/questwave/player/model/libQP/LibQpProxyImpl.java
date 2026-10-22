@@ -21,6 +21,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import com.anggrayudi.storage.file.MimeType;
 
+import com.questwave.player.R;
 import com.questwave.player.dto.libQP.ActionData;
 import com.questwave.player.dto.libQP.ErrorData;
 import com.questwave.player.dto.libQP.GetVarValuesResponse;
@@ -326,7 +327,15 @@ public class LibQpProxyImpl implements LibQpProxy, LibQpCallbacks {
             return;
         }
         if (!nativeMethods.QSPOpenSavedGameFromData(gameData, gameData.length, true)) {
-            showLastQspError();
+            // QSP 5.9.5 rejects saves made by other engines. Keep the technical
+            // details in logcat, but show the player a clear message.
+            var errorData = (ErrorData) nativeMethods.QSPGetLastErrorData();
+            if (errorData != null) {
+                Log.e(TAG, "Failed to load save: " + getStringOrEmpty(nativeMethods.QSPGetErrorDesc(errorData.errorNum)));
+            }
+            if (gameInterface != null) {
+                gameInterface.showError(context.getString(R.string.incompatibleSave));
+            }
         }
     }
 

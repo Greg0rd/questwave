@@ -24,6 +24,7 @@
         <string name="downloadButton">Download game</string>
     <!-- Dialog Error -->
         <string name="error">Error</string>
+        <string name="incompatibleSave">This save file is incompatible with QSP 5.9.5 or corrupted. It was not loaded.</string>
         <string name="interFolderError">Error reading the internal folder of the application</string>
         <string name="gamesFolderError">Error reading and/or creating a folder with games</string>
         <string name="gameFolderEmpty">I didn\'t find a file in the format in the folder with the game .qsp or .gam!</string>
