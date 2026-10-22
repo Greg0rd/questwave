@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Use in dialog/toast/notification -->
+    <!-- Notification channel -->
+        <string name="channelInstallGame">Install game</string>
+    <!-- Install notification -->
+        <string name="titleNotify">Game install</string>
+    <!-- Copy notification -->
+        <string name="titleCopyNotify">Copying the game directory</string>
+        <string name="bodyCopyNotify">I am copying the game folder!</string>
+        <string name="bodyCopiedNotify">Hurray! I copied the folder with the game -GAMENAME-!</string>
+    <!-- Dialog LoadGamePopup -->
+        <string name="loadGamePopup">The save file was not found in gameDir. Would you like to manually specify the path to the save file?</string>
+    <!-- Dialog Close -->
+        <string name="promptCloseGame">Are you sure you want to close the game?</string>
+    <!-- Dialog Select -->
+        <string name="selectGameFile">Select a game file to run</string>
+    <!-- Dialog Executor -->
+        <string name="selectTemplateFile">Select File</string>
+    <!-- Dialog Edit -->
+        <string name="selectPathFile">Select the patch file in the format .qsp</string>
+        <string name="selectModFile">Select the mod file in the format .qsp</string>
+        <string name="editButton">Edit game</string>
+        <string name="downloadButton">Download game</string>
+    <!-- Dialog Error -->
+        <string name="error">Error</string>
+        <string name="interFolderError">Error reading the internal folder of the application</string>
+        <string name="gamesFolderError">Error reading and/or creating a folder with games</string>
+        <string name="gameFolderEmpty">I didn\'t find a file in the format in the folder with the game .qsp or .gam!</string>
+        <string name="infoFileNotWritable">Error reading the game information file</string>
+        <string name="infoFileWriteError">Error writing game information to a file</string>
+        <string name="installError">I cannot copy the game folder -GAMENAME-!</string>
+        <string name="waitingError">An error occurred while waiting</string>
+        <string name="waitingInputError">I couldn\'t wait for the input</string>
+        <string name="noGameFilesError">I didn\'t find the game files after copying!</string>
+        <string name="notFoundSound">Sound file not found:</string>
+        <string name="notFoundImage">Image file not found:</string>
+    <!-- Dialog Install -->
+        <string name="gameName">Game name</string>
+        <string name="gameAuthor">Author</string>
+        <string name="gameVersion">Version</string>
+        <string name="selectFolder">Select the folder with the file</string>
+        <string name="selectIcon">Select icon</string>
+        <string name="add">Copy to the root folder</string>
+    <!-- Dialog GameInfo -->
+        <string name="author">Author: -AUTHOR-</string>
+        <string name="ported_by">Ported by: -PORTED_BY-</string>
+        <string name="version">Version: -VERSION-</string>
+        <string name="fileSize">Size: -SIZE-</string>
+        <string name="fileType">File Type: -TYPE-</string>
+        <string name="experimental">(experimental)</string>
+        <string name="mod_data">Modified: -MOD_DATA-</string>
+        <string name="pub_data">Published: -PUB_DATA-</string>
+        <string name="close">Close</string>
+        <string name="play">Play</string>
+    <!-- Dialog Credits -->
+    <string name="appDescription">
+<![CDATA[
+<h2><center>About Questopia<img src=\"file:///android_res/drawable/landscape.jpg\" width=\"100%\"></center></h2>
+<h4 style="margin-left:5px;">Quest Player Android is an open-source Android port of <b>Quest Soft Player</b> (<a href=\"http://qsp.su/?option=com_content&view=article&id=64\">Russian site</a>), based on a fork from <a href=\"https://github.com/seedhartha/QuestPlayer\">seedharta</a>. The most recent version can be downloaded from <a href=\"https://github.com/l3ger0j/Questopia\">GitHub</a> or in the <a href=\"https://t.me/QuestPlayer\">Telegram channel</a>.</h4>
+]]>
+    </string>
+    <string name="appCredits">
+<![CDATA[
+<center><h3>Cast</h3></center>
+<ul>
+    <li><b>Coding:</b>
+    <ul style="list-style-type:none">
+        <li><a href=\"https://github.com/l3ger0j/\">l3ger0j</a></li>
+        <li><a href=\"https://github.com/shirrumon/\">shirrumon</a></li>
+    </ul>
+</ul>
+<center><h3>People who participated in the development of the original fork from seedharta</h3></center>
+<ul>
+    <li><b>Coding:</b>
+    <ul style="list-style-type:none">
+        <li>Nex (~v1.0.201)</li>
+        <li>BOOMik (v1.3)</li>
+        <li>MrBoboFace (v1.4+)</li>
+        <li>seedhartha (v2.1+)</li>
+        <li>l3ger0j (~v2.1+)</li>
+    </ul>
+    <li><b>Translations:</b></li>
+    <ul style="list-style-type:none">
+        <li>Illume (English~v1.3/Simplified Chinese/Traditional Chinese)</li>
+        <li>Unregistred (Russian)</li>
+    <li><b>Special Thanks:</b> Kevin Smarts and all those in <a href=\"https://tfgamessite.com/\">TFGamesSite Community</a></li>
+    <li><i>The Fifth World</i> painting by Noah Bradley (Creative Commons License; image scaled and cropped)</li>
+</ul>
+]]>
+    </string>
+    <!-- Use in activity/fragment -->
+    <!-- QTopia -->
+        <string name="appName">Questopia</string>
+    <!-- SettingsFragment -->
+        <string name="closeToApply">Close settings to apply changes</string>
+        <string name="settingsEffect">The setting will take effect the next time you unpack the game</string>
+        <string name="addFolder">Change the root directory</string>
+        <string name="addFolderSum0">Current root dir is internal directory of the application</string>
+        <string name="addFolderSum1">Current root dir is external directory of the device</string>
+    <!-- FragmentImageBox -->
+        <string name="image">Image</string>
+    <!-- Use in menu -->
+    <!-- Menu game -->
+        <!-- Group running -->
+        <string name="mainDescTitle">Description</string>
+        <string name="mainDescContDesc">Go to main description</string>
+        <string name="varsDescTitle">Add. description</string>
+        <string name="varsDescContDesc">Go to additional description</string>
+        <string name="inventoryTitle">Inventory</string>
+        <string name="inventoryContDesc">Go to inventory</string>
+        <string name="userInputTitle">User input</string>
+        <string name="restartGameTitle">Restart game</string>
+        <string name="loadTitle">Load</string>
+        <string name="saveTitle">Save</string>
+        <!-- Group default -->
+        <string name="gameStockTitle">Game Stock</string>
+        <string name="search">Search</string>
+        <string name="settingsTitle">Settings</string>
+    <!-- Menu delete -->
+        <string name="selectAllTitle">Select all</string>
+        <string name="deleteGameTitle">Delete game</string>
+    <!-- Menu settings fragment -->
+        <!-- General section -->
+        <string name="generalCatTitle">General</string>
+        <string name="langTitle">Language</string>
+        <string name="langSum">Choose display language</string>
+        <string name="binPrefTitle">Binary prefixes</string>
+        <string name="binPrefSum">Choose binary prefixes</string>
+        <string name="soundTitle">Play sound</string>
+        <string name="actsHeightTitle">Actions List Height</string>
+        <!-- Text section -->
+        <string name="textCatTitle">Text Display Settings</string>
+        <string name="fontStyleTitle">Font Style</string>
+        <string name="fontSizeTitle">Font Size</string>
+        <string name="useGameFontTitle">Use Game Font</string>
+        <string name="useGameFontSum">Use the font settings from the game</string>
+        <string name="useGameTextColorTitle">Use Game Text Color</string>
+        <string name="useGameTextColorSum">Use the text color settings from the game</string>
+        <string name="textColorTitle">Custom Text Color</string>
+        <string name="useGameBackgroundColorTitle">Use Game Background Color</string>
+        <string name="useGameBackgroundColorSum">Use the background color settings from the game</string>
+        <string name="backColorTitle">Custom Background Color</string>
+        <string name="useGameLinkColorTitle">Use Game Link Color</string>
+        <string name="useGameLinkColorSum">Use the link color settings from the game</string>
+        <string name="linkColorTitle">Custom Link Color</string>
+        <string name="textBackLinkColorSum">Default value -VALUE-</string>
+        <string name="extendedName">Questopia -VERSION-</string>
+        <!-- Image section -->
+        <string name="imageCatTitle">Image Display Settings</string>
+        <string name="autoWidthTitle">Auto Width Image</string>
+        <string name="autoWidthSum">Use an auto-detectable value for the width of the image</string>
+        <string name="customWidthTitle">Custom Width Image</string>
+        <string name="autoHeightTitle">Auto Height Image</string>
+        <string name="autoHeightSum">Use an auto-detectable value for the height of the image</string>
+        <string name="customHeightTitle">Custom Height Image</string>
+        <string name="fullScreenImageSum">When clicked, the picture will open in the dialog</string>
+        <string name="fullScreenImageTitle">Fullscreen Images</string>
+        <!-- Switch section -->
+        <string name="filePicker">File Picker Dialog (alpha)</string>
+        <string name="immersiveModeTitle">Immersive Mode</string>
+        <string name="separatorTitle">Separator</string>
+        <string name="autoscrollTitle">Autoscroll</string>
+        <string name="imageDebugTitle">Image Path Debugger</string>
+        <string name="imageDebugSum">A mode that enables the display of an error dialog if the path to the image is incorrect</string>
+        <string name="musicDebugTitle">Music Path Debugger</string>
+        <string name="musicDebugSum">A mode that enables the display of an error dialog if the path to the music is incorrect</string>
+        <string name="execStringTitle">String executor</string>
+        <!-- Extra section -->
+        <string name="extraCatTitle">Extra</string>
+        <string name="pluginTitle">Extension menu</string>
+        <string name="aboutTitle">About Quest Player</string>
+    <!-- Menu save and load -->
+        <string name="selectSlot">Select a slot</string>
+        <string name="slotPresent" formatted="false">Slot %d - %s</string>
+        <string name="slotEmpty">Slot %d [Empty]</string>
+        <string name="loadFrom">From File…</string>
+        <string name="saveTo">To File…</string>
+    <!-- Menu plugins -->
+        <string name="pluginMenuTitle">Plugins</string>
+    <!-- Menu news -->
+        <string name="newsMenuTitle">News Questopia</string>
+</resources>

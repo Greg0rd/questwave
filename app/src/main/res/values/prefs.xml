@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English/Default version -->
+<resources>
+    <string-array name="fontName">
+        <item>DEFAULT</item>
+        <item>SANS_SERIF</item>
+        <item>SERIF</item>
+        <item>MONOSPACE</item>
+    </string-array>
+    <string-array name="fontValue">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="fontSize">
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+    </string-array>
+    <string-array name="langName">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
+    <string-array name="binPrefName">
+        <item>B/KB/MB/GB/TB</item>
+        <item>B/KiB/MiB/GiB/TiB</item>
+    </string-array>
+    <string-array name="langValue">
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+    <string-array name="binPrefValue">
+        <item>1000</item>
+        <item>1024</item>
+    </string-array>
+    <string-array name="actsHeight">
+        <item>1/5</item>
+        <item>1/4</item>
+        <item>1/3</item>
+        <item>1/2</item>
+        <item>2/3</item>
+    </string-array>
+</resources>

@@ -1,0 +1,45 @@
+name: Android build CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      Name:
+        description: Create a chaos?
+        required: true
+        default: yes
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build release artifacts
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build release APK and AAB after test
+      run: |
+        ./gradlew test
+        ./gradlew assembleRelease
+        ./gradlew bundleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3.1.0
+      with:
+          name: app-release-unsing.apk
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
+
+    - name: Upload AAB Bundle
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: app-release-unsing.aab
+        path: app/build/outputs/bundle/release/app-release.aab
