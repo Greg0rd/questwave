@@ -57,7 +57,7 @@ Output: `app/build/outputs/apk/debug/app-debug.apk`.
 CI: `.github/workflows/questwave-debug.yml` (manual dispatch or push to
 `feature/questwave-qsp-5.9.5`) uploads the debug APK. No secrets are required.
 
-## Credits and licensing
+## Credits
 
 Questwave would not exist without the work of others:
 
