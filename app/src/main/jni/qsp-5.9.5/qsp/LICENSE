@@ -1,0 +1,14 @@
+Licensing Summary
+-----------------
+
+- All original source files are licensed under the Mozilla Public License 2.0 (MPL-2.0).
+
+- This project includes source code licensed under the following permissive licenses:
+  - BSD 3-Clause License
+  - BSD 2-Clause License
+
+- This project includes optional debug features that depend on code licensed under the GNU General Public License version 2 or later (GPL-2.0-or-later).
+  - Release builds do not include any GPL-licensed code and are distributed under the MPL-2.0.
+  - If building the debug version, note that the resulting binary includes GPL code and must be distributed under the GPL-2.0-or-later.
+
+Please refer to the individual source files for the exact license terms and copyright notices.

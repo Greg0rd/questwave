@@ -28,8 +28,9 @@ android {
     }
 
     externalNativeBuild {
-        ndkBuild {
-            path 'src/main/jni/qsp-5.7/Android.mk'
+        cmake {
+            path 'src/main/jni/qsp-5.9.5/CMakeLists.txt'
+            version '3.22.1'
         }
     }
     buildTypes {
@@ -53,7 +54,7 @@ android {
         aidl true
     }
 
-    ndkVersion = '25.2.9519653'
+    ndkVersion = '27.3.13750724'
     lint {
         abortOnError false
     }
