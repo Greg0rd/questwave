@@ -7,7 +7,7 @@
 
         <variable
             name="stockVM"
-            type="org.qp.android.ui.stock.StockViewModel" />
+            type="com.questwave.player.ui.stock.StockViewModel" />
     </data>
 
     <ScrollView

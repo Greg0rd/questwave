@@ -8,7 +8,7 @@
 
         <variable
             name="innerGameData"
-            type="org.qp.android.dto.stock.InnerGameData" />
+            type="com.questwave.player.dto.stock.InnerGameData" />
     </data>
 
     <androidx.cardview.widget.CardView

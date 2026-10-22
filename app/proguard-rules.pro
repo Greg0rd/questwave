@@ -12,8 +12,8 @@
    public *;
 }
 
--keep class org.qp.android.dto.libQP.** { *; }
--keep class org.qp.android.model.libQP.** { *; }
+-keep class com.questwave.player.dto.libQP.** { *; }
+-keep class com.questwave.player.model.libQP.** { *; }
 
 -keep class net.sf.sevenzipjbinding.** { *; }
 

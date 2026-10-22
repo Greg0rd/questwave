@@ -8,7 +8,7 @@
 
         <variable
             name="pluginInfo"
-            type="org.qp.android.dto.plugin.PluginInfo" />
+            type="com.questwave.player.dto.plugin.PluginInfo" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"

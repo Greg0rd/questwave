@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/gameMainFragment"
-        android:name="org.qp.android.ui.game.GameMainFragment"
+        android:name="com.questwave.player.ui.game.GameMainFragment"
         android:label="GameMainFragment" />
     <fragment
         android:id="@+id/gameObjectFragment"
-        android:name="org.qp.android.ui.game.GameObjectFragment"
+        android:name="com.questwave.player.ui.game.GameObjectFragment"
         android:label="GameObjectFragment" />
     <fragment
         android:id="@+id/gameVarsFragment"
-        android:name="org.qp.android.ui.game.GameVarsFragment"
+        android:name="com.questwave.player.ui.game.GameVarsFragment"
         android:label="GameVarsFragment" />
 </navigation>

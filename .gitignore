@@ -45,3 +45,6 @@ Thumbs.db
 obj/
 *.patch
 app/src/main/libs/
+
+# Local build logs
+build-*.log

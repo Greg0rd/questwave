@@ -8,7 +8,7 @@
 
         <variable
             name="qpListItem"
-            type="org.qp.android.model.libQP.QpListItem" />
+            type="com.questwave.player.model.libQP.QpListItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
